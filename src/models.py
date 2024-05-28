@@ -1,4 +1,6 @@
-from sqlalchemy import MetaData, Integer, String, ForeignKey, Column, Table, Boolean, Numeric
+from datetime import datetime
+
+from sqlalchemy import MetaData, Integer, String, ForeignKey, Column, Table, Boolean, Numeric, TIMESTAMP, JSON
 
 metadata = MetaData()
 
@@ -57,7 +59,7 @@ programming_language = Table(
     'programming_language',
     metadata,
     Column('id', Integer, primary_key=True),
-    Column('programming_language', String)
+    Column('programming_language', JSON)
 )
 
 # -----------------------------user-----------------------------
@@ -108,6 +110,8 @@ vacancy = Table(
     Column('work_experience', Integer, ForeignKey('work_experience.id')),
     Column('work_schedule', Integer, ForeignKey('work_schedule.id')),
     Column('programming_language', Integer, ForeignKey('programming_language.id')),
+    Column('date_uploaded', TIMESTAMP, nullable=False, default=datetime.utcnow()),
+    Column('date_disappeared', TIMESTAMP),
 )
 
 favorite_vacancy = Table(
